@@ -5,7 +5,7 @@ const EDUCATION_ITEMS = [
   {
     id: 'siem',
     name: 'SIEM, Nashik, India',
-    logo: `${baseUrl}images/siem2.png`,
+    logo: `${baseUrl}/portfolio2026/images/siem2.png`,
     subtitle: 'Bachelors in Computer Engineering',
     dateRange: 'Aug 2019 - May 2023',
     description:
@@ -16,7 +16,7 @@ const EDUCATION_ITEMS = [
     name: 'New York University',
     subtitle: 'Masters in computer engineering',
     dateRange: 'Aug 2024 - May 2026',
-    logo: `${baseUrl}images/nyu_plain.png`,
+    logo: `${baseUrl}/portfolio2026/images/nyu_plain.png`,
     description:
       'Graduate program in Computer Engineering at NYU. Master of Science.',
   },

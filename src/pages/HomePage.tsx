@@ -14,7 +14,7 @@ function HomePage() {
             </p>
           </div>
           <img
-            src={`${import.meta.env.BASE_URL}images/face.png`}
+            src={`${import.meta.env.BASE_URL}/portfolio2026/images/face.png`}
             alt="Vaibhav Chandgir"
             className="glass-card__image"
           />
