@@ -343,11 +343,11 @@ main a {
 }
 
 .glass-card--holo-mask-nyu .glass-card__holo-lines {
-  mask-image: url(/images/NYU.png);
+  mask-image: var(--mask-nyu);
 }
 
 .glass-card--holo-mask-siem .glass-card__holo-lines {
-  mask-image: url(/images/siem.png);
+  mask-image: var(--mask-siem);
   opacity: 0.5;
 }
 

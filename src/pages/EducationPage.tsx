@@ -1,10 +1,11 @@
 import { useRef, useLayoutEffect, useState, useCallback } from 'react';
 
+const baseUrl = import.meta.env.BASE_URL;
 const EDUCATION_ITEMS = [
   {
     id: 'siem',
     name: 'SIEM, Nashik, India',
-    logo: '/images/siem2.png',
+    logo: `${baseUrl}images/siem2.png`,
     subtitle: 'Bachelors in Computer Engineering',
     dateRange: 'Aug 2019 - May 2023',
     description:
@@ -15,7 +16,7 @@ const EDUCATION_ITEMS = [
     name: 'New York University',
     subtitle: 'Masters in computer engineering',
     dateRange: 'Aug 2024 - May 2026',
-    logo: '/images/nyu_plain.png',
+    logo: `${baseUrl}images/nyu_plain.png`,
     description:
       'Graduate program in Computer Engineering at NYU. Master of Science.',
   },
