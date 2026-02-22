@@ -3,10 +3,10 @@ import { createRoot } from 'react-dom/client';
 import App from './App';
 import './index.css';
 
-/* Set base URL for assets (GitHub Pages subpath) */
-const base = import.meta.env.BASE_URL;
-document.documentElement.style.setProperty('--mask-nyu', `url(${base}images/NYU.png)`);
-document.documentElement.style.setProperty('--mask-siem', `url(${base}images/siem.png)`);
+/* Set full URLs for mask images (GitHub Pages) */
+const assetsBase = 'https://vaibhavsadgir50.github.io/portfolio2026';
+document.documentElement.style.setProperty('--mask-nyu', `url(${assetsBase}/images/NYU.png)`);
+document.documentElement.style.setProperty('--mask-siem', `url(${assetsBase}/images/siem.png)`);
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

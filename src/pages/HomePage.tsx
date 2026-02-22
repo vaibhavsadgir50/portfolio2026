@@ -14,12 +14,12 @@ function HomePage() {
             </p>
           </div>
           <img
-            src={`${import.meta.env.BASE_URL}/portfolio2026/images/face.png`}
+            src="https://vaibhavsadgir50.github.io/portfolio2026/images/face.png"
             alt="Vaibhav Chandgir"
             className="glass-card__image"
           />
         </div>
-        <Button href={`${import.meta.env.BASE_URL}resume.pdf`} className="generate-button--small">Resume</Button>
+        <Button href="https://vaibhavsadgir50.github.io/portfolio2026/resume.pdf" className="generate-button--small">Resume</Button>
       </div>
     </section>
   );
