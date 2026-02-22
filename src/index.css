@@ -230,14 +230,16 @@ main a {
   margin-top: 6rem;
 }
 
-/* Home hero */
+/* Home hero: top spacing (navbar-like), card on the right */
 .home-hero {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
   min-height: 100%;
   width: 100%;
   box-sizing: border-box;
+  padding-top: 5rem;   /* space from top like a top navbar */
+  padding-right: 2rem;
 }
 
 /* Holo card effect (from resources/holo-card-css-animation) */
@@ -441,33 +443,38 @@ main a {
 .home-hero__content {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 1.75rem;
+  align-items: flex-start;
+  gap: 3rem;
 }
 
-/* Hero content scaled to match education section */
+/* Hero: smaller glass card */
 .home-hero .glass-card {
   max-width: 920px;
-  padding: 3.5rem 4rem;
-  gap: 2.5rem;
-  border-radius: 24px;
+  padding: 2rem 2.5rem;
+  gap: 1.75rem;
+  border-radius: 20px;
 }
 
 .home-hero .glass-card h1 {
-  font-size: 2.25rem;
+  font-size: 1.65rem;
   font-weight: 600;
   margin-bottom: 1rem;
 }
 
 .home-hero .glass-card h2 {
-  font-size: 2.5rem;
+  font-size: 1.9rem;
   font-weight: 600;
-  margin-bottom: 1.25rem;
+  margin-bottom: 1.5rem;
 }
 
 .home-hero .glass-card p {
-  font-size: 1.15rem;
-  line-height: 1.5;
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 1.25rem;
+}
+
+.home-hero .glass-card p:last-of-type {
+  margin-bottom: 0;
 }
 
 .home-hero .glass-card__image {
@@ -508,6 +515,8 @@ main a {
   padding: 14px 24px 14px 20px;
   min-width: 160px;
   border-radius: 24px;
+  margin-top: 3rem;
+  align-self: flex-start;
 }
 
 .home-hero .generate-button--small span {

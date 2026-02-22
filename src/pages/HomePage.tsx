@@ -7,11 +7,12 @@ function HomePage() {
         <div className="glass-card glass-card--no-holo">
           <div className="glass-card__text">
             <h1>Welcome</h1>
-            <h2>Hi, I'm a Vaibhav Chandgir.</h2>
+            <h2>Hey, I'm a Vaibhav Chandgir.</h2>
+            <p style={{ marginBottom: '2em' }}>A computer engineer based in New York and shaped by New York University (NYU),focused on building intelligent and scalable software systems.</p>
             <p>
-              This is my portfolio — explore my work, experience,
-              and get in touch.
+              This is my portfolio — explore my work.
             </p>
+            <Button href="https://vaibhavsadgir50.github.io/portfolio2026/PDF_Resume/Vaibhav_Chandgir_Resume.pdf" className="generate-button--small">Resume</Button>
           </div>
           <img
             src="https://vaibhavsadgir50.github.io/portfolio2026/images/face.png"
@@ -19,7 +20,6 @@ function HomePage() {
             className="glass-card__image"
           />
         </div>
-        <Button href="https://vaibhavsadgir50.github.io/portfolio2026/resume.pdf" className="generate-button--small">Resume</Button>
       </div>
     </section>
   );
