@@ -1,0 +1,92 @@
+@import url('https://fonts.googleapis.com/css?family=Google+Sans:500,400,300');
+  
+@keyframes background-color {
+  to {
+    background-color: var(--bg);
+  }
+}
+
+@keyframes slideIn{
+  to {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Google Sans', sans-serif;
+}
+
+h1 {
+  font-size: 6vw;
+  font-weight: bold;
+  opacity: 0;
+  animation: slideIn .1s linear;
+}
+
+.hero {
+  background-color: white;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  animation: background-color .2s linear;
+  
+  &-1 {
+    --bg: #ffcb00;
+    
+    h1 {
+      transform: translateX(-100%);
+    }
+  }
+
+  &-2 {
+    --bg: #e91e3e;
+    --delay: .3;
+    
+    h1 {
+      color: white;
+      transform: translateX(200%);
+    }
+  }
+  
+  &-3 {
+    --bg: #198b4a;
+    --delay: .8;
+    
+    h1 {
+      color: white;
+      transform: translateY(-200%);
+    }
+  }
+}
+
+.progress {
+  height: 3px;
+  width: 0%;
+  background-color: #1A73E8;
+  position: fixed;
+  left: 0;
+  top: 0;
+  animation: progress 1s linear;
+  
+  @keyframes progress {
+    to {
+      width: 100%;
+    }
+  }
+}
+
+:root {
+  --delay: 0;
+  .animate {
+    animation-play-state: paused;
+    animation-delay: calc((var(--scroll) - var(--delay)) * -1s);
+    animation-iteration-count: 1;
+    animation-fill-mode: both;
+  }
+}

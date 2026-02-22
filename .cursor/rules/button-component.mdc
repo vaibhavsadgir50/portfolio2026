@@ -1,0 +1,16 @@
+---
+description: Use the project's animated Button for any "button" the user asks for
+alwaysApply: false
+globs: src/**/*.tsx
+---
+
+# Buttons
+
+When the user asks to add a "button" or "link that looks like a button", use the shared **Button** component from `src/components/Button.tsx`.
+
+- **Import**: `import Button from '../components/Button';` (adjust path from the current file).
+- **Label**: Put the label as children, e.g. `<Button>Resume</Button>` or `<Button>Submit</Button>`.
+- **Link**: To make it open a URL, pass `href`: `<Button href="https://...">Label</Button>` (opens in new tab).
+- **Action**: For in-page actions use `onClick`: `<Button onClick={() => { ... }}>Label</Button>`.
+
+The component uses the animated style from `resources/button-hover-animation` (star icon, hover scale/glow, GSAP star animation). Do not create new `<button>` or `<a>` elements for primary actions; use `<Button>` so the look is consistent.
