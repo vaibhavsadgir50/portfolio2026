@@ -1,22 +1,64 @@
 import { useState, useRef, useCallback, useEffect, useLayoutEffect } from 'react';
 
+const IMAGES_BASE = `${import.meta.env.BASE_URL}images`;
+
 type WorkItem = {
   id: number;
   title: string;
   num: string;
   image: string | null;
   company: string;
+  location?: string;
   period: string;
   description: string;
   highlights?: string[];
 };
 
 const WORK_ITEMS: WorkItem[] = [
-  { id: 1, title: 'Role One', num: '01', image: null, company: 'Company One', period: '2022 – Present', description: 'Brief role description and impact.', highlights: ['Key achievement one', 'Key achievement two', 'Key achievement three'] },
-  { id: 2, title: 'Role Two', num: '02', image: null, company: 'Company Two', period: '2020 – 2022', description: 'Brief role description and impact.', highlights: ['Key achievement one', 'Key achievement two'] },
-  { id: 3, title: 'Role Three', num: '03', image: null, company: 'Company Three', period: '2018 – 2020', description: 'Brief role description and impact.', highlights: ['Key achievement one', 'Key achievement two', 'Key achievement three'] },
-  { id: 4, title: 'Role Four', num: '04', image: null, company: 'Company Four', period: '2016 – 2018', description: 'Brief role description and impact.', highlights: ['Key achievement one', 'Key achievement two'] },
-  { id: 5, title: 'Role Five', num: '05', image: null, company: 'Company Five', period: '2014 – 2016', description: 'Brief role description and impact.', highlights: ['Key achievement one', 'Key achievement two', 'Key achievement three'] },
+  {
+    id: 1,
+    title: 'Research Developer Intern',
+    num: '01',
+    image: `${IMAGES_BASE}/Scrypted-logo.png`,
+    company: 'Scrypted Inc',
+    location: 'Remote',
+    period: 'Jun 2025 – Dec 2025',
+    description:
+      'Tech: TypeScript, Node.js, Express, React, Next.js, Tailwind CSS, AWS, Docker, REST APIs, AI Model Integration, Video Processing Pipelines.',
+    highlights: [
+      'Architected and deployed an AI-powered video generation platform processing 1,000+ jobs/day by building an asynchronous orchestration service (Node.js, Express, TypeScript) to coordinate model execution and post-processing pipelines.',
+      'Integrated multiple multimodal models (Veo, Flux, Kling) into a unified inference workflow, implementing prompt validation, retry logic, and batching to reduce failed jobs by 40% and cut P95 render time by 50%.',
+      'Designed configurable AI workflow tooling that allowed non-engineers to compose model chains (text → image → video → edit), accelerating experimentation and reducing feature launch cycles from days to hours.',
+      'Built a browser-based video editor using React, Next.js, and Tailwind with support for AI-generated assets, timeline composition, and reusable templates that reduced manual editing time by 60%.',
+      'Contributed to CRPC decentralized coordination protocol, implementing commit-reveal-validation flows and backend services supporting multi-agent execution across Web2/Web3 infrastructure.',
+    ],
+  },
+  {
+    id: 2,
+    title: 'Software Engineering Intern (Technology Integration)',
+    num: '02',
+    image: `${IMAGES_BASE}/Bankbazaar-logo.png`,
+    company: 'BankBazaar.com',
+    location: 'Mumbai, India',
+    period: 'May 2024 – Aug 2024',
+    description:
+      'Tech: REST APIs, OpenAPI/Swagger, SQL, Data Analytics, API Integration, Documentation Automation.',
+    highlights: [
+      'Revamped API documentation using OpenAPI/Swagger, improving developer onboarding efficiency and reducing integration errors.',
+      'Built internal analytics workflows to monitor feature adoption and performance metrics, supporting product decision-making with data-driven insights.',
+    ],
+  },
+  {
+    id: 3,
+    title: 'Data Science Intern',
+    num: '03',
+    image: `${IMAGES_BASE}/Letsgrowmore-logo.webp`,
+    company: "Let's Grow More LLC",
+    location: 'Remote',
+    period: '',
+    description: '',
+    highlights: [],
+  },
 ];
 
 const SPEED_DRAG = -0.1;
@@ -177,8 +219,17 @@ function WorkExperiencePage() {
     const findCard = (el: EventTarget | null): HTMLElement | null =>
       (el as HTMLElement)?.closest?.('.work-experience-section .carousel-item') ?? null;
 
+    const resetAllCards = () => {
+      carousel.querySelectorAll<HTMLElement>('.carousel-item').forEach((card) => {
+        card.style.removeProperty('--ratio-x');
+        card.style.removeProperty('--ratio-y');
+        card.style.setProperty('--correction', '100%');
+      });
+    };
+
     const onPointerMove = (e: PointerEvent) => {
       const card = findCard(e.target);
+      resetAllCards();
       if (!card) return;
       const rect = card.getBoundingClientRect();
       const hw = rect.width / 2;
@@ -191,11 +242,7 @@ function WorkExperiencePage() {
     };
 
     const onPointerLeave = () => {
-      carousel.querySelectorAll<HTMLElement>('.carousel-item').forEach((card) => {
-        card.style.removeProperty('--ratio-x');
-        card.style.removeProperty('--ratio-y');
-        card.style.setProperty('--correction', '100%');
-      });
+      resetAllCards();
     };
 
     carousel.addEventListener('pointermove', onPointerMove, { passive: true });
@@ -237,7 +284,13 @@ function WorkExperiencePage() {
               <div className="carousel-box__holo-bg" aria-hidden="true" />
               <div className="carousel-box__holo-lines" aria-hidden="true" />
               <div className="carousel-box__holo-circles" aria-hidden="true" />
-              <div className="carousel-item__title">{item.title}</div>
+              {item.image && (
+                <div className="carousel-item__logo">
+                  <img src={item.image} alt="" />
+                </div>
+              )}
+              <div className="carousel-item__subtitle">{item.title}</div>
+              <div className="carousel-item__company">{item.company}</div>
               <div className="carousel-item__num">{item.num}</div>
             </div>
           </div>
@@ -295,8 +348,15 @@ function WorkExperiencePage() {
             <div className="work-experience-detail-modal__content">
               <h2 id="work-detail-title" className="work-experience-detail-modal__title">{selectedItem.title}</h2>
               <p className="work-experience-detail-modal__company">{selectedItem.company}</p>
-              <p className="work-experience-detail-modal__period">{selectedItem.period}</p>
-              <p className="work-experience-detail-modal__description">{selectedItem.description}</p>
+              {selectedItem.location && (
+                <p className="work-experience-detail-modal__location">{selectedItem.location}</p>
+              )}
+              {selectedItem.period && (
+                <p className="work-experience-detail-modal__period">{selectedItem.period}</p>
+              )}
+              {selectedItem.description && (
+                <p className="work-experience-detail-modal__description">{selectedItem.description}</p>
+              )}
               {selectedItem.highlights && selectedItem.highlights.length > 0 && (
                 <ul className="work-experience-detail-modal__highlights">
                   {selectedItem.highlights.map((h, i) => (

@@ -3,4 +3,5 @@ export { default as AwardsPage } from './AwardsPage';
 export { default as EducationPage } from './EducationPage';
 export { default as WorkExperiencePage } from './WorkExperiencePage';
 export { default as ProjectsPage } from './ProjectsPage';
+export { default as SkillsPage } from './SkillsPage';
 export { default as ContactPage } from './ContactPage';

@@ -5,11 +5,12 @@ import {
   EducationPage,
   WorkExperiencePage,
   ProjectsPage,
+  SkillsPage,
   ContactPage,
 } from './pages';
 import TubesBackground from './components/TubesBackground';
 
-const SECTION_IDS = ['home', 'education', 'work-experience', 'projects', 'awards', 'contact'] as const;
+const SECTION_IDS = ['home', 'education', 'work-experience', 'projects', 'skills', 'awards', 'contact'] as const;
 
 function App() {
   const mainRef = useRef<HTMLElement>(null);
@@ -143,6 +144,9 @@ function App() {
           </section>
           <section id="projects" className="scroll-section scroll-section--zoom">
             <ProjectsPage />
+          </section>
+          <section id="skills" className="scroll-section scroll-section--zoom">
+            <SkillsPage />
           </section>
           <section id="awards" className="scroll-section scroll-section--zoom">
             <AwardsPage />

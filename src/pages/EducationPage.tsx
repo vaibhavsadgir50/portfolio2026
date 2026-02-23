@@ -8,8 +8,11 @@ const EDUCATION_ITEMS = [
     logo: `${ASSETS_BASE}/images/siem2.png`,
     subtitle: 'Bachelors in Computer Engineering',
     dateRange: 'Aug 2019 - May 2023',
-    description:
-      "Sandip Foundation's Institute of Engineering & Management. Bachelor's degree in Computer Engineering.",
+    description: "Built strong foundations in computer science and system design. Focused on algorithms, data structures, and computational fundamentals.",
+    descriptionExtras: {
+      school: "Graduated with Honors in AI/ML",
+      year: 'Class of 2023',
+    },
   },
   {
     id: 'nyu',
@@ -18,27 +21,29 @@ const EDUCATION_ITEMS = [
     dateRange: 'Aug 2024 - May 2026',
     logo: `${ASSETS_BASE}/images/nyu_plain.png`,
     description:
-      'Graduate program in Computer Engineering at NYU. Master of Science.',
+      'AI • Blockchain and Defi • Distributed Systems • High-Performance Computing • Machine learning',
+    descriptionExtras: {
+      school: 'from NYU Tandon & NYU Stern',
+      year: 'Class of 2026',
+    },
   },
 ];
 
-const FLIP_DURATION_MS = 500;
+const FLIP_DURATION_MS = 380;
 
 function EducationPage() {
   const cardsRef = useRef<HTMLDivElement>(null);
   const [expandedId, setExpandedId] = useState<string | null>(null);
   const [flippingCardId, setFlippingCardId] = useState<string | null>(null);
-  const [flipDirection, setFlipDirection] = useState<'to-back' | 'to-front'>('to-back');
   const flipTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const handleCardClick = useCallback(
     (itemId: string) => {
       if (flippingCardId !== null) return;
       const goingToBack = expandedId !== itemId;
-      setFlipDirection(goingToBack ? 'to-back' : 'to-front');
+      setExpandedId(goingToBack ? itemId : null);
       setFlippingCardId(itemId);
       flipTimeoutRef.current = setTimeout(() => {
-        setExpandedId(goingToBack ? itemId : null);
         setFlippingCardId(null);
         flipTimeoutRef.current = null;
       }, FLIP_DURATION_MS);
@@ -98,18 +103,10 @@ function EducationPage() {
       </div>
 
       <div ref={cardsRef} className="education-section__cards">
-        {EDUCATION_ITEMS.map((item) => {
-          const isFlipping = flippingCardId === item.id;
-          const flipClass =
-            isFlipping && flipDirection === 'to-back'
-              ? 'card--flip-to-back'
-              : isFlipping && flipDirection === 'to-front'
-                ? 'card--flip-to-front'
-                : '';
-          return (
+        {EDUCATION_ITEMS.map((item) => (
             <div
               key={item.id}
-              className={`card rotate ${flipClass}`.trim()}
+              className="card rotate"
               data-education-id={item.id}
               onClick={() => handleCardClick(item.id)}
               role="button"
@@ -126,7 +123,7 @@ function EducationPage() {
               <div
                 className="card-inner"
                 style={{
-                  transform: flippingCardId !== item.id ? `rotateY(${expandedId === item.id ? 180 : 0}deg)` : undefined,
+                  transform: `rotateY(${expandedId === item.id ? 180 : 0}deg)`,
                 }}
               >
                 <div className="card-face card-face--front">
@@ -153,14 +150,25 @@ function EducationPage() {
                 <div className="card-face card-face--back">
                   <div className="card-back">
                     <p className="card-back__text">
-                      {item.description ?? 'No description available.'}
+                      <span className="card-back__line--main">
+                        {item.description ?? 'No description available.'}
+                      </span>
+                      {'descriptionExtras' in item && item.descriptionExtras && (
+                        <>
+                          <span className="card-back__line--school">
+                            {item.descriptionExtras.school}
+                          </span>
+                          <span className="card-back__line--year">
+                            {item.descriptionExtras.year}
+                          </span>
+                        </>
+                      )}
                     </p>
                   </div>
                 </div>
               </div>
             </div>
-          );
-        })}
+        ))}
       </div>
     </section>
   );
