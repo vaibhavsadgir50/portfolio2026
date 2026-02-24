@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import {
   HomePage,
-  AwardsPage,
   EducationPage,
   WorkExperiencePage,
   ProjectsPage,
@@ -10,11 +9,18 @@ import {
 } from './pages';
 import TubesBackground from './components/TubesBackground';
 
-const SECTION_IDS = ['home', 'education', 'work-experience', 'projects', 'skills', 'awards', 'contact'] as const;
+const SECTION_IDS = ['home', 'education', 'work-experience', 'projects', 'skills', 'contact'] as const;
+
+function getMobileSectionTitle(index: number): string {
+  if (index === 0) return 'Welcome';
+  const id = SECTION_IDS[index];
+  return id.replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
+}
 
 function App() {
   const mainRef = useRef<HTMLElement>(null);
   const [activeSectionIndex, setActiveSectionIndex] = useState(0);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const scrollToSection = (index: number) => {
     const main = mainRef.current;
@@ -22,6 +28,7 @@ function App() {
     if (main && el) {
       main.scrollTo({ top: el.offsetTop, behavior: 'smooth' });
     }
+    setMobileMenuOpen(false);
   };
 
   /* Track active section and progress bar from normal scroll */
@@ -98,6 +105,65 @@ function App() {
   return (
     <>
       <TubesBackground />
+      <div
+        className={`site-title${activeSectionIndex > 0 ? ' site-title--visible' : ''}`}
+        aria-hidden="true"
+      >
+        Vaibhav Chandgir
+      </div>
+      <button
+        type="button"
+        className="mobile-menu-btn"
+        onClick={() => setMobileMenuOpen((o) => !o)}
+        aria-expanded={mobileMenuOpen}
+        aria-controls="mobile-menu"
+        aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
+      >
+        <span className="mobile-menu-btn__line" />
+        <span className="mobile-menu-btn__line" />
+        <span className="mobile-menu-btn__line" />
+      </button>
+      <div
+        className="mobile-section-title"
+        aria-live="polite"
+        aria-label={`Section: ${getMobileSectionTitle(activeSectionIndex)}`}
+      >
+        {getMobileSectionTitle(activeSectionIndex)}
+      </div>
+      <div
+        id="mobile-menu"
+        className={`mobile-menu ${mobileMenuOpen ? 'mobile-menu--open' : ''}`}
+        aria-hidden={!mobileMenuOpen}
+      >
+        <div
+          className="mobile-menu__backdrop"
+          onClick={() => setMobileMenuOpen(false)}
+          aria-hidden="true"
+        />
+        <div className="mobile-menu__panel" role="dialog" aria-label="Page navigation">
+          <button
+            type="button"
+            className="mobile-menu__close"
+            onClick={() => setMobileMenuOpen(false)}
+            aria-label="Close menu"
+          >
+            <span aria-hidden="true">×</span>
+          </button>
+          <nav className="mobile-menu__nav">
+            {SECTION_IDS.map((id, index) => (
+              <button
+                key={id}
+                type="button"
+                className={`mobile-menu__link${activeSectionIndex === index ? ' mobile-menu__link--active' : ''}`}
+                onClick={() => scrollToSection(index)}
+                aria-current={activeSectionIndex === index ? 'true' : undefined}
+              >
+                {id.replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase())}
+              </button>
+            ))}
+          </nav>
+        </div>
+      </div>
       <nav className="nav-lever" aria-label="Page navigation">
         <svg className="nav-lever__svg nav-lever__svg--defs" aria-hidden="true">
           <defs>
@@ -147,9 +213,6 @@ function App() {
           </section>
           <section id="skills" className="scroll-section scroll-section--zoom">
             <SkillsPage />
-          </section>
-          <section id="awards" className="scroll-section scroll-section--zoom">
-            <AwardsPage />
           </section>
           <section id="contact" className="scroll-section scroll-section--zoom">
             <ContactPage />

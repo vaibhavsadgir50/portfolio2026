@@ -1,6 +1,15 @@
-import { useRef, useLayoutEffect, useState, useCallback } from 'react';
+import { useRef, useLayoutEffect, useState, useCallback, useEffect } from 'react';
 
 const ASSETS_BASE = 'https://vaibhavsadgir50.github.io/portfolio2026';
+const SPEED_DRAG = -0.12;
+const DRAG_THRESHOLD = 8;
+
+function getZindex(length: number, activeIndex: number): number[] {
+  return Array.from({ length }, (_, i) =>
+    i === activeIndex ? length : length - Math.abs(i - activeIndex)
+  );
+}
+
 const EDUCATION_ITEMS = [
   {
     id: 'siem',
@@ -37,9 +46,98 @@ function EducationPage() {
   const [flippingCardId, setFlippingCardId] = useState<string | null>(null);
   const flipTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
+  const [progress, setProgress] = useState(0);
+  const [isDown, setIsDown] = useState(false);
+  const startX = useRef(0);
+  const hasDragged = useRef(false);
+  const rafId = useRef<number | null>(null);
+  const pendingProgress = useRef<number | null>(null);
+  const progressRef = useRef(progress);
+  progressRef.current = progress;
+
+  const itemCount = EDUCATION_ITEMS.length;
+  const activeIndex = Math.min(
+    Math.floor((progress / 100) * Math.max(itemCount - 1, 1)),
+    Math.max(itemCount - 1, 0)
+  );
+  const zIndexes = getZindex(itemCount, activeIndex);
+
+  const getClientX = (e: React.MouseEvent | React.TouchEvent | globalThis.MouseEvent | TouchEvent) =>
+    'clientX' in e ? e.clientX : (e as TouchEvent).touches?.[0]?.clientX ?? 0;
+
+  const handlePointerDown = useCallback(
+    (e: React.MouseEvent | React.TouchEvent) => {
+      setIsDown(true);
+      hasDragged.current = false;
+      startX.current = getClientX(e);
+    },
+    []
+  );
+
+  const handlePointerMove = useCallback(
+    (e: React.MouseEvent | globalThis.MouseEvent | TouchEvent) => {
+      if (!isDown) return;
+      const x = getClientX(e);
+      if (Math.abs(x - startX.current) > DRAG_THRESHOLD) hasDragged.current = true;
+      const delta = (x - startX.current) * SPEED_DRAG;
+      startX.current = x;
+      const next = Math.max(0, Math.min(100, progressRef.current + delta));
+      pendingProgress.current = next;
+      progressRef.current = next;
+      if (rafId.current === null) {
+        rafId.current = requestAnimationFrame(() => {
+          rafId.current = null;
+          if (pendingProgress.current !== null) {
+            setProgress(pendingProgress.current);
+            pendingProgress.current = null;
+          }
+        });
+      }
+    },
+    [isDown]
+  );
+
+  const handlePointerUp = useCallback(() => {
+    if (isDown) {
+      const snap = progressRef.current < 50 ? 0 : 100;
+      progressRef.current = snap;
+      setProgress(snap);
+    }
+    setIsDown(false);
+  }, [isDown]);
+
+  useEffect(() => {
+    if (!isDown) return;
+    const onMove = (e: globalThis.MouseEvent | TouchEvent) => handlePointerMove(e);
+    const onUp = () => handlePointerUp();
+    window.addEventListener('mousemove', onMove as (e: Event) => void);
+    window.addEventListener('mouseup', onUp);
+    window.addEventListener('touchmove', onMove as (e: Event) => void, { passive: false });
+    window.addEventListener('touchend', onUp);
+    return () => {
+      window.removeEventListener('mousemove', onMove as (e: Event) => void);
+      window.removeEventListener('mouseup', onUp);
+      window.removeEventListener('touchmove', onMove as (e: Event) => void);
+      window.removeEventListener('touchend', onUp);
+    };
+  }, [isDown, handlePointerMove, handlePointerUp]);
+
+  /* On mobile: when active index changes, flip back any card that is no longer active */
+  useEffect(() => {
+    if (!window.matchMedia('(max-width: 767px)').matches || expandedId == null) return;
+    const activeId = EDUCATION_ITEMS[activeIndex]?.id;
+    if (activeId !== expandedId) setExpandedId(null);
+  }, [activeIndex, expandedId]);
+
   const handleCardClick = useCallback(
-    (itemId: string) => {
+    (index: number, itemId: string) => {
       if (flippingCardId !== null) return;
+      if (hasDragged.current) return;
+      const isMobile = window.matchMedia('(max-width: 767px)').matches;
+      setProgress((index / Math.max(itemCount - 1, 1)) * 100);
+      if (isMobile && index !== activeIndex) {
+        return;
+      }
       const goingToBack = expandedId !== itemId;
       setExpandedId(goingToBack ? itemId : null);
       setFlippingCardId(itemId);
@@ -48,7 +146,7 @@ function EducationPage() {
         flipTimeoutRef.current = null;
       }, FLIP_DURATION_MS);
     },
-    [expandedId, flippingCardId]
+    [expandedId, flippingCardId, itemCount, activeIndex]
   );
 
   useLayoutEffect(() => {
@@ -60,6 +158,8 @@ function EducationPage() {
   useLayoutEffect(() => {
     const container = cardsRef.current;
     if (!container) return;
+    const isMobile = window.matchMedia('(max-width: 767px)').matches;
+    if (isMobile) return;
 
     const findCard = (el: EventTarget | null): HTMLElement | null =>
       (el as HTMLElement)?.closest?.('.education-section .card') ?? null;
@@ -102,19 +202,31 @@ function EducationPage() {
         <p className="education-section__subtitle">Academic background.</p>
       </div>
 
-      <div ref={cardsRef} className="education-section__cards">
-        {EDUCATION_ITEMS.map((item) => (
+      <div
+        ref={cardsRef}
+        className={`education-section__cards${isDown ? ' education-section__cards--dragging' : ''}`}
+        onMouseDown={handlePointerDown}
+        onTouchStart={handlePointerDown}
+      >
+        {EDUCATION_ITEMS.map((item, index) => (
             <div
               key={item.id}
               className="card rotate"
               data-education-id={item.id}
-              onClick={() => handleCardClick(item.id)}
+              style={
+                {
+                  '--active': (index - activeIndex) / itemCount,
+                  '--zIndex': zIndexes[index],
+                  '--items': itemCount,
+                } as React.CSSProperties
+              }
+              onClick={() => handleCardClick(index, item.id)}
               role="button"
               tabIndex={0}
               onKeyDown={(e) => {
                 if (e.key === 'Enter' || e.key === ' ') {
                   e.preventDefault();
-                  handleCardClick(item.id);
+                  handleCardClick(index, item.id);
                 }
               }}
               aria-expanded={expandedId === item.id}
