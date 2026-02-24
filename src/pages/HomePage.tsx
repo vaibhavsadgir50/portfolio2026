@@ -29,7 +29,7 @@ function HomePage() {
               This is my portfolio — explore my work.
             </p>
             <div className="home-hero__buttons">
-              <a href="https://vaibhavsadgir50.github.io/portfolio2026/PDF_Resume/Vaibhav_Chandgir_Resume.pdf" className="hero-btn" target="_blank" rel="noopener noreferrer" aria-label="Resume">
+              <a href={`${import.meta.env.BASE_URL}PDF_Resume/Vaibhav_Chandgir_Resume.pdf`} className="hero-btn" target="_blank" rel="noopener noreferrer" aria-label="Resume">
                 <span className="hero-btn__inner">
                   {RESUME_ICON}
                   <span className="hero-btn__label">Resume</span>
