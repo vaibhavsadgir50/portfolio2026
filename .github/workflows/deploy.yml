@@ -43,6 +43,9 @@ jobs:
 
       - name: Add privacy policy
         run: cp mira-privacy.html ./dist/mira-privacy.html
+        
+      - name: List dist contents
+        run: ls dist/
 
   deploy:
     environment:
