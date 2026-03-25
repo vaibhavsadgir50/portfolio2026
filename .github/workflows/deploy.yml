@@ -41,6 +41,9 @@ jobs:
         with:
           path: ./dist
 
+      - name: Add privacy policy
+        run: cp mira-privacy.html ./dist/mira-privacy.html
+
   deploy:
     environment:
       name: github-pages
