@@ -1,23 +1,106 @@
 <!DOCTYPE html>
-<html>
-<head><title>Mira Privacy Policy</title></head>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mira Privacy Policy</title>
+<style>
+  body { font-family: Arial, sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; line-height: 1.7; color: #333; }
+  h1 { color: #1a1a2e; border-bottom: 2px solid #6C63FF; padding-bottom: 10px; }
+  h2 { color: #6C63FF; margin-top: 30px; }
+  p { margin: 10px 0; }
+  ul { margin: 10px 0 10px 20px; }
+  .last-updated { color: #888; font-size: 14px; }
+  .contact-box { background: #f5f5ff; border-left: 4px solid #6C63FF; padding: 15px; margin: 20px 0; }
+</style>
+</head>
 <body>
+
 <h1>Mira Privacy Policy</h1>
-<p>Last updated: March 24, 2026</p>
+<p class="last-updated">Last updated: March 24, 2026</p>
 
-<h2>Information We Collect</h2>
-<p>Mira collects and stores voice utterances you provide through the Alexa skill to enable memory functionality.</p>
+<p>This Privacy Policy describes how Mira ("we", "our", or "the skill") collects, uses, stores, and protects your personal information when you use the Mira Alexa skill ("the Service"). By using Mira, you agree to the collection and use of information in accordance with this policy.</p>
 
-<h2>How We Use Your Information</h2>
-<p>Your data is used solely to provide Mira's memory features. We do not sell or share your data with third parties.</p>
+<h2>1. Information We Collect</h2>
+<p>When you use Mira, we collect the following types of information:</p>
+<ul>
+  <li><strong>Voice utterances:</strong> The text content of what you say to Mira, including memories, notes, and questions you provide.</li>
+  <li><strong>Alexa User ID:</strong> A unique anonymized identifier provided by Amazon to distinguish between users. We do not receive your name, email, or Amazon account details.</li>
+  <li><strong>Alexa Person ID (if enabled):</strong> If you use Alexa Voice Profiles, we receive an anonymized per-speaker identifier to provide separate memory per voice.</li>
+  <li><strong>Device ID:</strong> An anonymized identifier for the Alexa device you use.</li>
+  <li><strong>Interaction data:</strong> The intents and utterances you speak, timestamps of interactions, and skill session data.</li>
+</ul>
+<p>We do not collect your real name, email address, physical address, payment information, or any other personally identifiable information beyond what Amazon provides through the Alexa Skills Kit.</p>
 
-<h2>Data Storage</h2>
-<p>Your memories are stored securely on Google Cloud Firestore.</p>
+<h2>2. How We Use Your Information</h2>
+<p>We use the information we collect solely to provide and improve the Mira service:</p>
+<ul>
+  <li>To store memories and notes you explicitly ask Mira to remember</li>
+  <li>To retrieve and recall memories when you request them</li>
+  <li>To generate contextually relevant AI responses using your stored memory as context</li>
+  <li>To maintain separate memory profiles per recognized voice (if Voice Profiles are enabled)</li>
+  <li>To improve the accuracy and quality of the skill</li>
+</ul>
+<p>We do not use your data for advertising, marketing, or any commercial purpose beyond providing the Mira service.</p>
 
-<h2>Data Deletion</h2>
-<p>You can delete all your data by saying "Alexa, ask Mira to forget everything."</p>
+<h2>3. Data Storage and Security</h2>
+<p>Your data is stored securely on Google Cloud Platform infrastructure:</p>
+<ul>
+  <li><strong>Google Cloud Firestore:</strong> Used to store your memories and interaction history. Data is encrypted at rest and in transit.</li>
+  <li><strong>Google Cloud Storage:</strong> Used to store AI model state data associated with your user profile.</li>
+  <li><strong>Google Cloud Run:</strong> Used to process your requests. No data is permanently stored in the processing layer.</li>
+</ul>
+<p>All data is stored in the United States (us-east1 region). We implement industry-standard security measures including encryption in transit (HTTPS/TLS) and encryption at rest.</p>
 
-<h2>Contact</h2>
-<p>For questions, contact: chandgirvaibhav@gmail.com</p>
+<h2>4. Data Retention</h2>
+<p>We retain your data for as long as you use the Mira skill. Specifically:</p>
+<ul>
+  <li>Your memories and notes are stored indefinitely until you explicitly delete them or request account deletion.</li>
+  <li>You can delete all your memories at any time by saying "Alexa, ask Mira to forget everything."</li>
+  <li>If you disable the Mira skill, your data remains stored for 90 days before being automatically deleted, in case you re-enable the skill.</li>
+</ul>
+
+<h2>5. Data Sharing and Third Parties</h2>
+<p>We do not sell, trade, or rent your personal information to third parties. We may share your information only in the following limited circumstances:</p>
+<ul>
+  <li><strong>Google Cloud Platform:</strong> As our cloud infrastructure provider, Google processes data on our behalf under strict data processing agreements.</li>
+  <li><strong>Google Gemini API:</strong> Your voice utterances and memory context are sent to Google's Gemini API to generate responses. Google's use of this data is governed by Google's API Terms of Service and Privacy Policy.</li>
+  <li><strong>Amazon Alexa:</strong> Interaction data passes through Amazon's Alexa infrastructure as part of normal skill operation, governed by Amazon's Privacy Policy.</li>
+  <li><strong>Legal requirements:</strong> We may disclose your information if required by law or in response to valid legal process.</li>
+</ul>
+
+<h2>6. Your Rights and Choices</h2>
+<p>You have the following rights regarding your data:</p>
+<ul>
+  <li><strong>Access:</strong> You can ask Mira to recall your stored memories at any time.</li>
+  <li><strong>Deletion:</strong> Say "Alexa, ask Mira to forget everything" to delete all your stored memories immediately.</li>
+  <li><strong>Account deletion:</strong> To request complete deletion of all your data from our systems, contact us at the email below. We will process your request within 30 days.</li>
+  <li><strong>Opt out:</strong> You can disable the Mira skill at any time through the Alexa app, which will stop further data collection.</li>
+</ul>
+
+<h2>7. Children's Privacy</h2>
+<p>Mira is not directed at children under the age of 13. We do not knowingly collect personal information from children under 13. If you believe a child under 13 has provided us with personal information, please contact us immediately and we will delete such information.</p>
+
+<h2>8. Amazon Alexa and Voice Data</h2>
+<p>Mira operates as an Alexa skill. Amazon processes your voice recordings and converts them to text before sending them to Mira. Amazon's handling of your voice data is governed by Amazon's own Privacy Notice and Alexa Terms of Use. We only receive the text transcript of your voice commands, not the raw audio.</p>
+
+<h2>9. Changes to This Privacy Policy</h2>
+<p>We may update this Privacy Policy from time to time. We will notify users of any significant changes by updating the "Last updated" date at the top of this policy. Your continued use of Mira after any changes constitutes your acceptance of the new Privacy Policy.</p>
+
+<h2>10. International Users</h2>
+<p>Mira is currently available in the United States. If you access Mira from outside the United States, please be aware that your data will be transferred to and processed in the United States, which may have different data protection laws than your country.</p>
+
+<h2>11. Contact Us</h2>
+<div class="contact-box">
+  <p>If you have any questions, concerns, or requests regarding this Privacy Policy or your personal data, please contact us:</p>
+  <p><strong>Email:</strong> chandgirvaibhav@gmail.com</p>
+  <p>We will respond to all privacy-related inquiries within 30 days.</p>
+</div>
+
+<h2>12. Governing Law</h2>
+<p>This Privacy Policy is governed by the laws of the State of New York, United States, without regard to its conflict of law provisions.</p>
+
+<p style="margin-top: 40px; color: #888; font-size: 13px;">Mira is not affiliated with, sponsored by, or endorsed by Amazon.com, Inc. Alexa and all related logos are trademarks of Amazon.com, Inc. or its affiliates.</p>
+
 </body>
 </html>
